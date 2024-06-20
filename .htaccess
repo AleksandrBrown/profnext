@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# Rewrite URL to .html if not a file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/$ $1.html [L]
+
+# Handle two-level deep URLs, rewrite to .html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/([^/]+)/$ $1/$2.html [L]
+
+# Add trailing slash if URL does not end with a file extension or slash
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5}|/)$
+RewriteRule (.*)$ /$1/ [R=301,L]
